@@ -22,7 +22,10 @@ A cost-effective alternative leveraging virtualization capabilities.
 - **Strategy:** vSphere HA and Fault Tolerance (FT).
 - **Benefit:** Reduced hardware/licensing costs with robust resilience.
 - **Guide:** Best practices for virtualizing Vertica (Anti-Affinity, Resource Reservations).
-- **[View Presentation Slides](./VMWARE_SOLUTION_SLIDES.md)**
+- **View Presentation Slides:**
+    - [Markdown](./VMWARE_SOLUTION_SLIDES.md)
+    - [PDF](./VMWARE_SOLUTION_SLIDES.pdf)
+    - [PowerPoint](./VMWARE_SOLUTION_SLIDES.pptx)
 
 ## About
 These resources were gathered to provide a holistic view of the current observability landscape and to offer specific architectural guidance for critical network performance management systems.
