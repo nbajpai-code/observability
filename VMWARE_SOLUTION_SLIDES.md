@@ -2,6 +2,7 @@
 theme: gaia
 _class: lead
 paginate: true
+size: 16:9
 backgroundColor: #fff
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 ---
@@ -45,32 +46,17 @@ By virtualizing DxNetOps on VMware vSphere, we shift resilience from the *Applic
 2.  **vSphere Fault Tolerance (SMP-FT):** Instant failover with zero data loss.
 3.  **vMotion:** Zero-downtime maintenance.
 
+![h:500 center](./images/vsphere_architecture.png)
+
 ---
 
-# Architecture Overview
+---
 
-```mermaid
-graph TD
-    subgraph "vSphere Cluster"
-        Host1[ESXi Host 1]
-        Host2[ESXi Host 2]
-        Host3[ESXi Host 3]
-        
-        Storage[(Shared StorageSAN/NAS)]
-        
-        Host1 --> Storage
-        Host2 --> Storage
-        Host3 --> Storage
-        
-        VM_DA[Data Aggregator VM] -.->|Fault Tolerance| VM_DA_Shadow[DA Shadow VM]
-        VM_PC[Portal VM]
-        VM_DC[Collector VM]
-        VM_DB[Vertica Node 1]
-    end
-    
-    style VM_DA fill:#d4f1f9,stroke:#333
-    style VM_DA_Shadow fill:#e1e1e1,stroke:#333,stroke-dasharray: 5 5
-```
+# Visualizing Fault Tolerance
+
+![h:450 center](./images/fault_tolerance.png)
+
+*Comparison of active execution path between Primary and Shadow VMs.*
 
 ---
 
@@ -78,9 +64,9 @@ graph TD
 
 | Component | Strategy | RTO (Recovery Time) | Why? |
 | :--- | :--- | :--- | :--- |
-| **Data Aggregator** | **vSphere Fault Tolerance** | **Zero** | Critical polling engine; cannot tolerate gaps. |
-| **Performance Center** | **vSphere HA** | Minutes | Web UI availability is critical but can tolerate distinct reboot. |
-| **Data Collectors** | **vSphere HA** | Minutes | Distributed design buffers data during outages. |
+| **Data Aggregator** | **vSphere Fault Tolerance** | **Zero** | Critical; no polling gaps allowed. |
+| **Performance Center** | **vSphere HA** | Minutes | UI critical; tolerates reboot. |
+| **Data Collectors** | **vSphere HA** | Minutes | Buffers data during outages. |
 | **Vertica DB** | **vSphere HA + Anti-Affinity** | Minutes | Database consistency is priority; Anti-affinity ensures K-safety. |
 
 ---
@@ -90,9 +76,11 @@ graph TD
 To ensure bare-metal performance for the Data Repository:
 
 *   **100% Memory Reservation:** Prevent swapping/ballooning.
-*   **Anti-Affinity Rules:** Ensure Vertica nodes *never* share a physical host.
 *   **Paravirtual SCSI (PVSCSI):** Low CPU overhead for high I/O.
 *   **Thick Provision Eager Zeroed:** Eliminate first-write latency.
+
+![bg right:40% fit](./images/anti_affinity.png)
+*   **Anti-Affinity Rules:** Ensure Vertica nodes *never* share a physical host.
 
 ---
 
