@@ -3,6 +3,19 @@ theme: gaia
 _class: lead
 paginate: true
 size: 16:9
+style: |
+  section {
+    font-size: 24px;
+  }
+  h1 {
+    font-size: 40px;
+  }
+  h2 {
+    font-size: 30px;
+  }
+  table {
+    font-size: 20px;
+  }
 backgroundColor: #fff
 backgroundImage: url('https://marp.app/assets/hero-background.svg')
 ---
@@ -46,15 +59,13 @@ By virtualizing DxNetOps on VMware vSphere, we shift resilience from the *Applic
 2.  **vSphere Fault Tolerance (SMP-FT):** Instant failover with zero data loss.
 3.  **vMotion:** Zero-downtime maintenance.
 
-![h:500 center](./images/vsphere_architecture.png)
-
----
+![h:400 center](./images/dxnetops_architecture_hightech.png)
 
 ---
 
 # Visualizing Fault Tolerance
 
-![h:450 center](./images/fault_tolerance.png)
+![h:350 center](./images/fault_tolerance_hightech.png)
 
 *Comparison of active execution path between Primary and Shadow VMs.*
 
@@ -62,12 +73,12 @@ By virtualizing DxNetOps on VMware vSphere, we shift resilience from the *Applic
 
 # Deep Dive: Component Strategy
 
-| Component | Strategy | RTO (Recovery Time) | Why? |
+| **App** | **Strategy** | **RTO** | **Rationale** |
 | :--- | :--- | :--- | :--- |
-| **Data Aggregator** | **vSphere Fault Tolerance** | **Zero** | Critical; no polling gaps allowed. |
-| **Performance Center** | **vSphere HA** | Minutes | UI critical; tolerates reboot. |
-| **Data Collectors** | **vSphere HA** | Minutes | Buffers data during outages. |
-| **Vertica DB** | **vSphere HA + Anti-Affinity** | Minutes | Database consistency is priority; Anti-affinity ensures K-safety. |
+| **Data Aggregator** | **Fault Tolerance** | **Zero** | Critical; no polling gaps. |
+| **Performance Ctr** | **vSphere HA** | Mins | UI critical; tolerates reboot. |
+| **Data Collectors** | **vSphere HA** | Mins | Buffers data during outage. |
+| **Vertica DB** | **HA + Anti-Affinity** | Mins | Priority: K-safety & consistency. |
 
 ---
 
@@ -79,7 +90,7 @@ To ensure bare-metal performance for the Data Repository:
 *   **Paravirtual SCSI (PVSCSI):** Low CPU overhead for high I/O.
 *   **Thick Provision Eager Zeroed:** Eliminate first-write latency.
 
-![bg right:40% fit](./images/anti_affinity.png)
+![bg right:40% fit](./images/anti_affinity_hightech.png)
 *   **Anti-Affinity Rules:** Ensure Vertica nodes *never* share a physical host.
 
 ---
@@ -88,10 +99,10 @@ To ensure bare-metal performance for the Data Repository:
 
 | Feature | Physical Active-Active | VMware vSphere Solution |
 | :--- | :--- | :--- |
-| **CapEx (Hardware)** | $$$$ (2x Full Stack) | $$ (Shared Pool) |
-| **OpEx (Power/Cooling)** | $$$$ | $$ |
-| **Licensing** | Application Standby Licenses | vSphere Standard/Enterprise |
-| **Complexity** | High (Custom Scripts) | Low (Native feature) |
+| **CapEx** | $$$$ (2x Hardware) | $$ (Shared Pool) |
+| **OpEx** | $$$$ (Power/Cooling) | $$ (Consolidated) |
+| **Licensing** | Double (Standby) | Standard vSphere |
+| **Complexity** | High (Custom Scripts) | Low (Native) |
 
 ---
 
