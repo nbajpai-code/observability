@@ -17,5 +17,11 @@ An architectural guide for deploying Broadcom DxNetOps in a multi-site High Avai
 - **Strategy:** Dual Ingestion (Active-Active) vs. CopyCluster.
 - **Best Practices:** K-Safety, Fault Groups, and Client Failover.
 
+### 3. [Alternate Solution: VMware vSphere HA](./DXNETOPS_VMWARE_HA.md)
+A cost-effective alternative leveraging virtualization capabilities.
+- **Strategy:** vSphere HA and Fault Tolerance (FT).
+- **Benefit:** Reduced hardware/licensing costs with robust resilience.
+- **Guide:** Best practices for virtualizing Vertica (Anti-Affinity, Resource Reservations).
+
 ## About
 These resources were gathered to provide a holistic view of the current observability landscape and to offer specific architectural guidance for critical network performance management systems.
